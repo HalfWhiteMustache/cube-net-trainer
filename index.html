@@ -1,0 +1,491 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>מאמן קובייה פרוסה</title>
+<meta name="description" content="מדריך ויזואלי ומחולל שאלות קובייה פרוסה — פזצט&quot;א">
+</head>
+<body>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Heebo:wght@500;700;800&family=Assistant:wght@400;600;700&display=swap">
+<style>
+:root{
+  --bg:#f3f5f8; --surface:#ffffff; --surface-2:#e9edf3; --ink:#1b2130; --ink-2:#4b5566; --line:#d6dce6;
+  --accent:#0e6f6a; --accent-ink:#ffffff; --accent-soft:#d9efec;
+  --ok:#2e7d32; --ok-soft:#e3f3e5; --bad:#c62828; --bad-soft:#fbe5e5; --warn:#b26a00; --warn-soft:#fff1dc;
+  --shadow:0 1px 2px rgba(20,30,50,.06),0 6px 20px rgba(20,30,50,.06);
+  --r:14px;
+}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
+  color-scheme:dark; --bg:#12161e; --surface:#1b2129; --surface-2:#252c37; --ink:#e8ecf2; --ink-2:#aab3c1; --line:#333c49;
+  --accent:#3cbdb3; --accent-ink:#0e1a19; --accent-soft:#173a38; --ok:#6bd08a; --ok-soft:#1c3324; --bad:#ff7b7b; --bad-soft:#3a1d1d;
+  --warn:#f2b35a; --warn-soft:#3a2c14; --shadow:0 1px 2px rgba(0,0,0,.3),0 6px 20px rgba(0,0,0,.25);
+}}
+:root[data-theme="dark"]{
+  color-scheme:dark; --bg:#12161e; --surface:#1b2129; --surface-2:#252c37; --ink:#e8ecf2; --ink-2:#aab3c1; --line:#333c49;
+  --accent:#3cbdb3; --accent-ink:#0e1a19; --accent-soft:#173a38; --ok:#6bd08a; --ok-soft:#1c3324; --bad:#ff7b7b; --bad-soft:#3a1d1d;
+  --warn:#f2b35a; --warn-soft:#3a2c14; --shadow:0 1px 2px rgba(0,0,0,.3),0 6px 20px rgba(0,0,0,.25);
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:Assistant,"Segoe UI",Arial,sans-serif;font-size:17px;line-height:1.6;direction:rtl}
+.wrap{max-width:960px;margin:0 auto;padding-block:0 64px;padding-inline:16px}
+h1,h2,h3{font-family:Heebo,Assistant,Arial,sans-serif;text-wrap:balance;margin:0;line-height:1.2}
+h1{font-size:clamp(28px,5vw,40px);font-weight:800}
+h2{font-size:clamp(22px,3.5vw,28px);font-weight:700;margin-bottom:8px}
+h3{font-size:19px;font-weight:700}
+p{margin:0 0 10px}
+.muted{color:var(--ink-2)}
+.eyebrow{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);font-weight:700}
+nav.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);border-bottom:1px solid var(--line);margin-inline:-16px;padding:10px 16px;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+nav.top .brand{font-family:Heebo;font-weight:800;margin-inline-end:auto}
+nav.top a{color:var(--ink);text-decoration:none;padding:6px 12px;border-radius:999px;background:var(--surface-2);font-weight:600;font-size:15px}
+nav.top a:hover{background:var(--accent-soft)}
+header.hero{padding-block:36px 20px;display:grid;grid-template-columns:1.3fr 1fr;gap:20px;align-items:center}
+header.hero .lead{font-size:19px;max-width:32em}
+header.hero figure{margin:0;display:flex;justify-content:center}
+@media (max-width:640px){header.hero{grid-template-columns:1fr}}
+section{margin-top:40px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:20px;box-shadow:var(--shadow)}
+.lesson{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:22px;align-items:start}
+.lesson.wide-fig{grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr)}
+@media (max-width:720px){.lesson,.lesson.wide-fig{grid-template-columns:1fr}}
+figure.fig{margin:0;background:var(--surface-2);border-radius:12px;padding:14px;display:flex;flex-direction:column;align-items:center;gap:8px;overflow-x:auto}
+figure.fig figcaption{font-size:14px;color:var(--ink-2);text-align:center}
+.figrow{display:flex;gap:18px;align-items:center;justify-content:center;flex-wrap:wrap}
+.figitem{display:flex;flex-direction:column;align-items:center;gap:4px;font-size:14px;font-weight:600}
+.figitem.bad{color:var(--bad)} .figitem.good{color:var(--ok)}
+.rule{display:flex;gap:12px;align-items:flex-start;padding:10px 0;border-top:1px solid var(--line)}
+.rule:first-of-type{border-top:0}
+.rule .n{flex:0 0 auto;width:30px;height:30px;border-radius:50%;background:var(--accent);color:var(--accent-ink);display:grid;place-items:center;font-weight:800;font-family:Heebo}
+.pill{display:inline-block;padding:2px 10px;border-radius:999px;background:var(--accent-soft);color:var(--accent);font-weight:700;font-size:14px}
+.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin-top:14px}
+.step{background:var(--surface-2);border-radius:12px;padding:14px}
+.step b{display:block;font-family:Heebo;font-size:17px;margin-bottom:4px}
+.step .t{font-size:13px;color:var(--accent);font-weight:700}
+ul.tight{margin:6px 0 0;padding-inline-start:20px}
+ul.tight li{margin-bottom:4px}
+/* question card */
+.q{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:18px;box-shadow:var(--shadow);margin-top:16px}
+.q .head{display:flex;gap:8px;align-items:center;flex-wrap:wrap;font-size:14px;color:var(--ink-2);margin-bottom:10px}
+.badge{background:var(--surface-2);border-radius:999px;padding:2px 10px;font-weight:600}
+.qbody{display:grid;grid-template-columns:auto 1fr;gap:22px;align-items:center}
+@media (max-width:560px){.qbody{grid-template-columns:1fr;justify-items:center}}
+.net{display:flex;justify-content:center}
+.opts{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+@media (max-width:560px){.opts{grid-template-columns:repeat(2,1fr)}}
+.opt{border:2px solid var(--line);border-radius:12px;padding:8px 4px 6px;background:var(--surface);cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:2px;position:relative;transition:border-color .15s,transform .15s}
+.opt:hover{border-color:var(--accent)}
+.opt:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.opt .l{font-family:Heebo;font-weight:800;font-size:18px}
+.opt.sel{border-color:var(--accent);background:var(--accent-soft)}
+.opt.good{border-color:var(--ok);background:var(--ok-soft)}
+.opt.bad{border-color:var(--bad);background:var(--bad-soft)}
+.opt.out{opacity:.45}
+.opt.out::after{content:"✕";position:absolute;inset:0;display:grid;place-items:center;font-size:56px;color:var(--bad);font-weight:800;opacity:.85}
+.opt.hl{border-color:var(--warn);box-shadow:0 0 0 4px var(--warn-soft)}
+.opt svg{max-width:100%;height:auto}
+.feedback{margin-top:12px;padding:10px 14px;border-radius:10px;font-weight:600;display:none}
+.feedback.ok{display:block;background:var(--ok-soft);color:var(--ok)}
+.feedback.bad{display:block;background:var(--bad-soft);color:var(--bad)}
+.solution{margin-top:12px;border-top:1px dashed var(--line);padding-top:12px}
+.sol-steps{display:flex;flex-direction:column;gap:8px;margin-top:8px}
+.sol-step{display:flex;gap:10px;align-items:flex-start;background:var(--surface-2);border-radius:10px;padding:10px 12px;font-size:15px;cursor:pointer;border:2px solid transparent}
+.sol-step.active{border-color:var(--warn)}
+.sol-step .k{flex:0 0 auto;font-family:Heebo;font-weight:800;color:var(--accent);min-width:1.4em;text-align:center}
+.sol-step.correct-step{background:var(--ok-soft)}
+.sol-step .kind{font-size:12px;color:var(--ink-2);display:block}
+.sol-net{display:flex;gap:16px;align-items:center;flex-wrap:wrap;margin-top:8px;font-size:14px}
+/* controls */
+.controls{display:flex;gap:12px;flex-wrap:wrap;align-items:center;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:14px 16px;box-shadow:var(--shadow);position:sticky;top:calc(env(safe-area-inset-top,0px) + 52px);z-index:4}
+.seg{display:flex;background:var(--surface-2);border-radius:10px;padding:3px;gap:2px}
+.seg button{border:0;background:transparent;color:var(--ink);padding:6px 12px;border-radius:8px;font:inherit;font-weight:600;cursor:pointer}
+.seg button[aria-pressed="true"]{background:var(--accent);color:var(--accent-ink)}
+.controls label{font-weight:600;font-size:15px;display:flex;align-items:center;gap:6px}
+select{font:inherit;padding:6px 10px;border-radius:8px;border:1px solid var(--line);background:var(--surface);color:var(--ink)}
+.btn{border:0;border-radius:10px;padding:9px 16px;font:inherit;font-weight:700;cursor:pointer;background:var(--accent);color:var(--accent-ink)}
+.btn.ghost{background:var(--surface-2);color:var(--ink)}
+.btn:focus-visible,select:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.score{margin-inline-start:auto;font-weight:700;font-variant-numeric:tabular-nums}
+.linkbtn{background:none;border:0;color:var(--accent);font:inherit;font-weight:700;cursor:pointer;padding:0;text-decoration:underline}
+.mistakes{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px}
+.mistake{background:var(--surface-2);border-radius:12px;padding:12px 14px;font-size:15px;border-inline-start:4px solid var(--bad)}
+.mistake b{display:block;font-family:Heebo}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+
+<div class="wrap">
+<nav class="top">
+  <span class="brand">מאמן קובייה פרוסה · פזצט"א</span>
+  <a href="#learn">איך פותרים</a>
+  <a href="#example">דוגמה מודרכת</a>
+  <a href="#practice">תרגול</a>
+</nav>
+
+<header class="hero">
+  <div>
+    <div class="eyebrow">תפיסה מרחבית · מיוני טיס ודפ"ר</div>
+    <h1>קובייה פרוסה — בלי לקפל בראש</h1>
+    <p class="lead">מקבלים פריסה ושואלים איזו קובייה יוצאת ממנה. מי שמנסה לקפל את הקובייה בדמיון לכל תשובה — נשרף לו הזמן. במקום זה לומדים שלושה כללי פסילה, ומורידים תשובות אחת־אחת עד שנשארת אחת.</p>
+    <p class="muted">למטה: הכללים עם ציורים, דוגמה מודרכת צעד־צעד, ואז מחולל שאלות בארבע רמות.</p>
+  </div>
+  <figure id="fig-hero"></figure>
+</header>
+
+<section id="learn">
+  <div class="eyebrow">שלב 1</div>
+  <h2>מה בכלל רואים בתשובה</h2>
+  <div class="card lesson">
+    <div>
+      <p>לקובייה שש פאות, אבל בציור רואים תמיד <b>שלוש בלבד</b>: עליונה, ימנית ושמאלית — שלוש פאות שנפגשות בפינה אחת.</p>
+      <p>שלוש פאות שרואים יחד הן תמיד <b>שכנות זו לזו</b>. הפאה השישית, הרביעית והחמישית מוסתרות — ולכן אותה קובייה בדיוק יכולה להצטייר ב־24 דרכים שונות. אין "המבט הנכון": כל התשובות מראות פינה כלשהי, והשאלה היא רק איזו פינה באמת קיימת בקובייה שלנו.</p>
+      <p class="muted">המסקנה: לא מחפשים את התשובה שדומה לפריסה. מחפשים מה <b>פוסל</b> כל תשובה.</p>
+    </div>
+    <figure class="fig" id="fig-views"><figcaption>אותה קובייה, שלושה מבטים שונים — כולם נכונים</figcaption></figure>
+  </div>
+</section>
+
+<section>
+  <div class="eyebrow">כלל 1</div>
+  <h2>פאות נגדיות לעולם לא נראות יחד</h2>
+  <div class="card lesson wide-fig">
+    <div>
+      <p>לכל פאה יש פאה אחת מולה. שתי פאות נגדיות לא נוגעות זו בזו — ולכן <b>אם תשובה מראה שתי פאות נגדיות, היא בחוץ.</b> זו הפסילה הכי מהירה, ורוב המסיחים נופלים בה.</p>
+      <p>איך מוצאים זוגות נגדיים על הפריסה, בלי לקפל:</p>
+      <div class="rule"><div class="n">א</div><div><b>קו ישר — דלג על אחת.</b> שתי פאות באותה שורה או עמודה עם פאה אחת ביניהן — נגדיות.</div></div>
+      <div class="rule"><div class="n">ב</div><div><b>שני האגפים.</b> ב־T ובצלב יש עמודה של ארבע ושתי פאות בודדות שמחוברות לה מהצדדים. שתי הבודדות תמיד נגדיות זו לזו, לא משנה באיזה גובה הן מחוברות.</div></div>
+      <div class="rule"><div class="n">ג</div><div><b>הזוג השלישי</b> הוא מה שנשאר.</div></div>
+      <div class="rule"><div class="n">!</div><div><b>פאות לבנות לא נספרות.</b> אי אפשר להבדיל בין לבנה ללבנה, ולכן כלל הניגודים עובד רק בין <b>פאות צבועות</b>. לבן בתשובה אף פעם לא פוסל ולא מאשר — מסתכלים רק על הצבועות.</div></div>
+    </div>
+    <figure class="fig" id="fig-opp"><figcaption>אותו צבע מסגרת = פאות נגדיות. בשני הצורות, זוג האגפים תמיד נגדי</figcaption></figure>
+  </div>
+</section>
+
+<section>
+  <div class="eyebrow">כלל 2</div>
+  <h2>כלל הפינה — פוסל תמונות מראה</h2>
+  <div class="card lesson wide-fig">
+    <div>
+      <p>המסיח הכי מסוכן: שלוש הפאות הנכונות, כולן שכנות, אבל <b>שתיים מהן הוחלפו</b>. סיבוב של קובייה לעולם לא הופך סדר — רק שיקוף עושה זאת, ושיקוף לא קורה בקיפול.</p>
+      <p>הבדיקה: מסמנים על הפריסה את שלוש הפאות שבתשובה. אם הן נפגשות סביב נקודה אחת (פינה עם "רבע ריק"), קוראים אותן <b>עם כיוון השעון</b> סביב הנקודה. בתשובה הסדר עם כיוון השעון הוא תמיד <b>עליון ← ימני ← שמאלי</b>. אם הסדר בפריסה יוצא הפוך — זו תמונת מראה, בחוץ.</p>
+      <p class="muted">אם השלוש לא נפגשות בנקודה אחת, ממקמים לפי פאת עוגן: פאה שמגיעים אליה בצעד אחד ואז פנייה — יושבת בקובייה בצד של הפנייה.</p>
+      <p><b>כשבתשובה רק שתי פאות צבועות ולבנה:</b> שואלים מי באמת יושבת בפינה הזאת ליד שתי הצבועות. אם שם צריכה להיות פאה צבועה — והתשובה מראה לבנה — זו תמונת מראה, בחוץ.</p>
+    </div>
+    <figure class="fig" id="fig-corner"><figcaption>הסדר עם כיוון השעון סביב הנקודה בפריסה זהה לסדר עליון←ימני←שמאלי בקובייה</figcaption></figure>
+  </div>
+</section>
+
+<section>
+  <div class="eyebrow">כלל 3</div>
+  <h2>כיוון המילוי — ביחס לצלע המשותפת כלום לא זז</h2>
+  <div class="card lesson wide-fig">
+    <div>
+      <p>כשפאה צבועה חצי או באלכסון, המסיח מציג אותה במקום הנכון אבל <b>מסובבת</b>. הבדיקה היחידה שצריך: איפה הצבע ביחס לצלע שבין שתי הפאות.</p>
+      <div class="rule"><div class="n">א</div><div><b>שכנות ישירות בפריסה:</b> הצלע המשותפת גלויה. אם בפריסה המשולש נוגע בצלע — גם בקובייה הוא נוגע בה.</div></div>
+      <div class="rule"><div class="n">ב</div><div><b>שכנות דרך פנייה (L):</b> הצלע המשותפת היא הצלע של כל פאה שפונה אל הרבע הריק. כאן רוב הטעויות — הפאה הסתובבה ב־90° יחסית לשכנתה, למרות שבפריסה זה "נראה" אחרת.</div></div>
+      <p class="muted">מספיק זוג אחד שנכשל כדי לפסול. לא צריך לבדוק את כל השלושה.</p>
+    </div>
+    <figure class="fig" id="fig-orient"><figcaption>הצלע המשותפת מסומנת באדום. באלכסון, הצבע חייב לגעת באותה צלע גם בקובייה</figcaption></figure>
+  </div>
+</section>
+
+<section>
+  <div class="eyebrow">השיטה</div>
+  <h2>סדר העבודה מול ארבע תשובות</h2>
+  <div class="card">
+    <p>מהזול ליקר. ברוב השאלות נגמרים אחרי שלב 2.</p>
+    <div class="steps">
+      <div class="step"><span class="t">2 שניות</span><b>1 · סריקת זרים</b>פאה עם צבע או מילוי שלא קיימים בפריסה? בחוץ.</div>
+      <div class="step"><span class="t">כלל 1</span><b>2 · ניגודים</b>מוצאים את שלושת הזוגות. תשובה שמראה זוג נגדי — בחוץ.</div>
+      <div class="step"><span class="t">כלל 2</span><b>3 · כלל הפינה</b>למה שנשאר: סדר עם כיוון השעון. תמונת מראה — בחוץ.</div>
+      <div class="step"><span class="t">כלל 3</span><b>4 · כיוון מילוי</b>רק אם עדיין נשארו שתיים: בודקים זוג אחד נוח ביחס לצלע המשותפת.</div>
+    </div>
+    <p class="muted" style="margin-top:12px">לא מאמתים את הנכונה "מאפס" — היא נכונה כי האחרות נפסלו. מסמנים וממשיכים.</p>
+  </div>
+</section>
+
+<section id="example">
+  <div class="eyebrow">דוגמה מודרכת</div>
+  <h2>שאלה אחת, צעד אחר צעד</h2>
+  <p class="muted">לחצו על כל שלב (או על "הבא") כדי לראות איזו תשובה נפסלת ולמה.</p>
+  <div id="example-host"></div>
+</section>
+
+<section>
+  <div class="eyebrow">ממה להיזהר</div>
+  <h2>הטעויות הנפוצות</h2>
+  <div class="mistakes">
+    <div class="mistake"><b>"זו שנראית הכי דומה לפריסה"</b>המסיח הקלאסי בנוי בדיוק כך. דמיון לא מוכיח כלום.</div>
+    <div class="mistake"><b>לקפל מחדש לכל תשובה</b>ארבע קיפולים בראש = ארבע הזדמנויות לטעות. פוסלים, לא מקפלים.</div>
+    <div class="mistake"><b>"הצבעים נכונים אז זה נכון"</b>חצי צבוע או אלכסון מסובב הוא תשובה שגויה גם אם כל הצבעים במקום.</div>
+    <div class="mistake"><b>קווקוו אנכי ואופקי הם אותו דבר</b>לא. אלה שני מילויים שונים.</div>
+    <div class="mistake"><b>לאבד את העוגן באמצע</b>בוחרים פאת עוגן אחת בתחילת השאלה ולא מחליפים אותה.</div>
+    <div class="mistake"><b>לפסול בגלל פאה לבנה</b>לבן אומר "לא ידוע", לא "ריק". כל לבנה יכולה להיות כל אחת מהלבנות — פוסלים רק דרך הפאות הצבועות.</div>
+  </div>
+</section>
+
+<section id="practice">
+  <div class="eyebrow">שלב 2</div>
+  <h2>תרגול — מחולל שאלות</h2>
+  <div class="controls">
+    <label>רמה
+      <div class="seg" id="level-seg">
+        <button type="button" data-level="1" aria-pressed="true">1</button>
+        <button type="button" data-level="2" aria-pressed="false">2</button>
+        <button type="button" data-level="3" aria-pressed="false">3</button>
+        <button type="button" data-level="4" aria-pressed="false">4</button>
+        <button type="button" data-level="0" aria-pressed="false">מעורב</button>
+      </div>
+    </label>
+    <label for="count">כמות
+      <select id="count"><option>5</option><option selected>10</option><option>20</option></select>
+    </label>
+    <button class="btn" id="gen" type="button">צור שאלות</button>
+    <button class="btn ghost" id="copy-json" type="button">העתק JSON</button>
+    <span class="score" id="score"></span>
+  </div>
+  <p class="muted" style="margin-top:10px">רמה 1: צבעים מלאים, פסילת ניגודים. רמה 2: מילוי כיווני אחד ותמונת מראה. רמה 3: מבט לא קנוני, מסיחי סיבוב. רמה 4: פחות פאות לבנות, מילוי חוזר, מבט מפינה תחתונה.</p>
+  <div id="questions"></div>
+</section>
+</div>
+
+<script>
+/* ===================== engine ===================== */
+const X=[1,0,0],Y=[0,1,0],Z=[0,0,1];
+const neg=v=>[-v[0],-v[1],-v[2]];
+const dot=(a,b)=>a[0]*b[0]+a[1]*b[1]+a[2]*b[2];
+const cross=(a,b)=>[a[1]*b[2]-a[2]*b[1],a[2]*b[0]-a[0]*b[2],a[0]*b[1]-a[1]*b[0]];
+const eq=(a,b)=>a[0]===b[0]&&a[1]===b[1]&&a[2]===b[2];
+const add=(a,b)=>[a[0]+b[0],a[1]+b[1],a[2]+b[2]];
+const scl=(a,k)=>[a[0]*k,a[1]*k,a[2]*k];
+
+const COLORS={pink:["#f48fb1","ורוד"],yellow:["#fff176","צהוב"],green:["#aed581","ירוק"],black:["#2b2b2b","שחור"],blue:["#90caf9","כחול"],orange:["#ffb74d","כתום"],purple:["#ce93d8","סגול"],white:["#ffffff","לבן"]};
+const STROKE={pink:"#e91e63",yellow:"#f9a825",green:"#689f38",black:"#2b2b2b",blue:"#1e88e5",orange:"#ef6c00",purple:"#8e24aa",white:"#999"};
+const FILL_TYPES={solid:[1,a=>`${a} מלא`],half:[4,a=>`חצי ${a} (ישר)`],diag:[4,a=>`אלכסון ${a}`],two:[4,(a,b)=>`חצי ${a} / חצי ${b}`],hatch:[2,a=>`קווקוו ${a}`],wave:[2,a=>`גלים ${a}`]};
+const F=(t,a,b=null)=>({t,a,b});
+const fkey=f=>`${f.t}|${f.a}|${f.b||""}`;
+const fdist=f=>FILL_TYPES[f.t][0];
+const fnorm=(f,rot)=>{const d=fdist(f);if(d===1)return 0;const m=d===4?360:180;return((rot%m)+m)%m;};
+const fname=f=>FILL_TYPES[f.t][1](COLORS[f.a][1],f.b?COLORS[f.b][1]:"");
+const fromKey=k=>{const [t,a,b]=k.split("|");return F(t,a,b||null);};
+
+const cellsOf=rows=>{const o=[];rows.forEach((row,r)=>[...row].forEach((ch,c)=>{if(ch==="X")o.push([r,c]);}));return o;};
+const NETS={cross:cellsOf([".X..","XXXX",".X.."]),t:cellsOf(["X...","XXXX","X..."])};
+const NET_HE={cross:"צלב (t)",t:"T"};
+const DIRS={N:[-1,0],E:[0,1],S:[1,0],W:[0,-1]};
+const sortCells=(idx,cells)=>idx.sort((i,j)=>cells[i][0]-cells[j][0]||cells[i][1]-cells[j][1]);
+
+class Net{
+  constructor(name,cells,fills,rots){
+    const order=sortCells([...Array(cells.length).keys()],cells);
+    this.name=name;this.cells=order.map(i=>cells[i]);this.fills=order.map(i=>fills?fills[i]:F("solid","white"));this.rots=order.map(i=>rots?rots[i]:0);
+    this.index=new Map(this.cells.map((c,i)=>[c.join(","),i]));this.fold();
+  }
+  nb(i){const [r,c]=this.cells[i];const o={};for(const d in DIRS){const j=this.index.get(`${r+DIRS[d][0]},${c+DIRS[d][1]}`);if(j!==undefined)o[d]=j;}return o;}
+  rotated(k){let cells=this.cells.map(c=>[...c]),rots=[...this.rots],fills=[...this.fills];for(let s=0;s<((k%4)+4)%4;s++){const R=Math.max(...cells.map(c=>c[0]))+1;cells=cells.map(([r,c])=>[c,R-1-r]);rots=rots.map(x=>((x-90)%360+360)%360);}return new Net(this.name,cells,fills,rots);}
+  fold(){let root=0;for(let i=1;i<6;i++)if(Object.keys(this.nb(i)).length>Object.keys(this.nb(root)).length)root=i;
+    const faces={};faces[root]={n:Z,r:X,u:Y};const q=[root];
+    while(q.length){const i=q.shift();const f=faces[i];const nb=this.nb(i);for(const d in nb){const j=nb[d];if(faces[j])continue;
+      const n=d==="E"?f.r:d==="W"?neg(f.r):d==="N"?f.u:neg(f.u);
+      const r=d==="E"?neg(f.n):d==="W"?f.n:f.r;const u=d==="N"?neg(f.n):d==="S"?f.n:f.u;
+      faces[j]={n,r,u};q.push(j);}}
+    this.faces=faces;this.root=root;}
+  opposite(i){const n=neg(this.faces[i].n);for(let j=0;j<6;j++)if(eq(this.faces[j].n,n))return j;}
+  adjacent(i,j){return i!==j&&dot(this.faces[i].n,this.faces[j].n)===0;}
+  path(a,b){const prev={[a]:null};const q=[a];while(q.length){const i=q.shift();if(i===b)break;for(const j of Object.values(this.nb(i)))if(!(j in prev)){prev[j]=i;q.push(j);}}const p=[];let i=b;while(i!==null){p.push(i);i=prev[i];}return p.reverse();}
+  oppositeRule(a,b){const p=this.path(a,b);if(p.length===3){const [r0,c0]=this.cells[p[0]],[r2,c2]=this.cells[p[2]];if(r0===r2||c0===c2)return"קו ישר – דלג על אחת";}if(p.length===4)return"מסלול Z של שלושה צעדים";return"שני האגפים המחוברים לעמודת הארבע";}
+  adjKind(a,b){if(Object.values(this.nb(a)).includes(b))return"שכנות ישירות בפריסה";for(const c of Object.values(this.nb(a))){if(Object.values(this.nb(c)).includes(b)){const [ra,ca]=this.cells[a],[rc,cc]=this.cells[c],[rb,cb]=this.cells[b];if((ra-rc)*(rc-rb)===0&&(ca-cc)*(cc-cb)===0)return"שכנות דרך פנייה (כלל ה-L)";}}return"שכנות שנוצרת בסגירת הפריסה";}
+  label(i){return`פאה ${i+1} (${fname(this.fills[i])})`;}
+}
+const SLOTS=["top","right","left"];
+const SLOT_FRAME={top:[Y,X,neg(Z)],right:[X,neg(Z),Y],left:[Z,X,Y]};
+function viewDescriptor(net,top,left){
+  const T=net.faces[top].n,L=net.faces[left].n,R=cross(T,L);let right;for(let j=0;j<6;j++)if(eq(net.faces[j].n,R))right=j;
+  const rm=v=>[dot(R,v),dot(T,v),dot(L,v)];const desc=[],used={};
+  for(const i of [top,right,left]){const f=net.faces[i];const n2=rm(f.n),r2=rm(f.r),u2=rm(f.u);const slot=eq(n2,Y)?"top":eq(n2,X)?"right":"left";
+    const [,Rs,Us]=SLOT_FRAME[slot];const frames=[[Rs,Us],[Us,neg(Rs)],[neg(Rs),neg(Us)],[neg(Us),Rs]];const k=frames.findIndex(fr=>eq(fr[0],r2)&&eq(fr[1],u2));
+    desc.push([fkey(net.fills[i]),fnorm(net.fills[i],net.rots[i]+90*k)]);used[slot]=i;}
+  return{desc,used};}
+const dkey=d=>JSON.stringify(d);
+function allViews(net){const m=new Map();for(let t=0;t<6;t++)for(let l=0;l<6;l++)if(net.adjacent(t,l)){const {desc,used}=viewDescriptor(net,t,l);const k=dkey(desc);if(!m.has(k))m.set(k,[]);m.get(k).push(used);}return m;}
+function rightFace(net,t,l){const R=cross(net.faces[t].n,net.faces[l].n);for(let j=0;j<6;j++)if(eq(net.faces[j].n,R))return j;}
+
+/* rng */
+function RNG(seed){let a=seed>>>0;const next=()=>{a|=0;a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296;};
+  return{rand:next,int:(lo,hi)=>lo+Math.floor(next()*(hi-lo+1)),choice:arr=>arr[Math.floor(next()*arr.length)],
+    shuffle:arr=>{for(let i=arr.length-1;i>0;i--){const j=Math.floor(next()*(i+1));[arr[i],arr[j]]=[arr[j],arr[i]];}return arr;},
+    sample(arr,k){return this.shuffle([...arr]).slice(0,k);}};}
+
+const LEVELS={
+  1:{nets:["t","cross"],directional:[0,0],whites:[3,4],repeats:0,netRot:[1],distractors:["foreign","opposite","opposite"],view:"canonical",dirTypes:[]},
+  2:{nets:["t","cross"],directional:[1,1],whites:[3,4],repeats:0,netRot:[1],distractors:["opposite","mirror","foreign"],view:"canonical",dirTypes:["half","diag"]},
+  3:{nets:["t","cross"],directional:[2,2],whites:[3,4],repeats:0,netRot:[1,3],distractors:["mirror","rotation","opposite"],view:"random",dirTypes:["half","diag","two","hatch"]},
+  4:{nets:["t","cross"],directional:[2,3],whites:[3,4],repeats:1,netRot:[1,3],distractors:["mirror","rotation","repeat"],view:"hard",dirTypes:["diag","two","hatch","wave","half"]},
+};
+function makeFills(rng,cfg){
+  const nDir=rng.int(...cfg.directional),nWhite=rng.int(...cfg.whites);
+  const palette=rng.shuffle(Object.keys(COLORS).filter(c=>c!=="white"));let colors=[...palette];
+  const take=()=>{if(!colors.length)colors=rng.sample(palette,palette.length);return colors.pop();};
+  const fills=[],rots=[];
+  for(let i=0;i<6;i++){if(i<nDir){const t=rng.choice(cfg.dirTypes);const a=take();let b=t==="two"?take():null;while(b===a)b=take();fills.push(F(t,a,b));rots.push(rng.choice([0,90,180,270]));}
+    else{fills.push(F("solid",i>=6-nWhite?"white":take()));rots.push(0);}}
+  const cnt=k=>fills.filter(f=>fkey(f)===k).length;const usedSrc=new Set();
+  for(let r=0;r<cfg.repeats;r++){const c=[];for(let s=0;s<6;s++)for(let d=0;d<6;d++)if(s!==d&&!usedSrc.has(s)&&!usedSrc.has(d)&&fills[s].a!=="white"&&fills[d].a!=="white"&&cnt(fkey(fills[s]))===1&&cnt(fkey(fills[d]))===1)c.push([s,d]);
+    if(!c.length)break;const [s,d]=rng.choice(c);usedSrc.add(s);usedSrc.add(d);fills[d]=F(fills[s].t,fills[s].a,fills[s].b);rots[d]=fdist(fills[d])>1?rng.choice([0,90,180,270]):0;}
+  const order=rng.shuffle([...Array(6).keys()]);return{fills:order.map(i=>fills[i]),rots:order.map(i=>rots[i])};}
+function chooseView(rng,net,mode){const root=net.root;if(mode==="canonical"){const nb=net.nb(root);const top=nb.N!==undefined?nb.N:Object.values(nb)[0];return[top,root];}
+  let pairs=[];for(let t=0;t<6;t++)for(let l=0;l<6;l++)if(net.adjacent(t,l))pairs.push([t,l]);
+  if(mode==="hard"){const hard=pairs.filter(([t,l])=>root!==t&&root!==l&&root!==rightFace(net,t,l));if(hard.length)pairs=hard;}return rng.choice(pairs);}
+
+const OPS={
+  opposite(rng,net,correct,used,valid){const slots=rng.shuffle([...SLOTS]);for(const keep of slots)for(const repl of slots){if(keep===repl)continue;const opp=net.opposite(used[keep]);const f=net.fills[opp];if(net.fills[used[keep]].a==="white"||f.a==="white")continue;
+    for(const rot of rng.sample([0,90,180,270],4)){const d=correct.map(x=>[...x]);d[SLOTS.indexOf(repl)]=[fkey(f),fnorm(f,rot)];if(!valid.has(dkey(d)))return{d,expl:`נפסלת בכלל הניגודים: ${net.label(used[keep])} ו-${net.label(opp)} נגדיות בפריסה (${net.oppositeRule(used[keep],opp)}), ולכן לעולם לא נראות יחד.`};}}return null;},
+  mirror(rng,net,correct,used,valid){const d=[correct[0],correct[2],correct[1]].map(x=>[...x]);if(valid.has(dkey(d)))return null;const t=used.top+1,r=used.right+1,l=used.left+1;
+    const whites=SLOTS.filter(s=>net.fills[used[s]].a==="white");if(whites.length>=2)return null;
+    if(whites.length===1){const w=used[whites[0]];const real=net.opposite(w);const col=SLOTS.filter(s=>s!==whites[0]).map(s=>used[s]);
+      return{d,expl:`תמונת מראה עם פאה לבנה: ${net.label(col[0])} ו-${net.label(col[1])} אכן שכנות, אבל בצד הזה של הצלע המשותפת יושבת ${net.label(real)} – לא פאה לבנה. לבן לא פוסל ולא מאשר; מה שפוסל הוא הפאה הצבועה שהייתה צריכה להופיע במקומו.`};}
+    return{d,expl:`תמונת מראה: שלוש הפאות אכן שכנות זו לזו, אבל הסדר סביב הפינה הפוך. בפריסה, עם כיוון השעון סביב הפינה המשותפת, הסדר הוא ${t}←${r}←${l}; בתשובה הסדר עליון←ימני←שמאלי יוצא ${t}←${l}←${r}. סיבוב לעולם לא הופך סדר – רק שיקוף.`};},
+  rotation(rng,net,correct,used,valid){const slots=rng.shuffle(SLOTS.filter(s=>fdist(net.fills[used[s]])>1));for(const s of slots){const i=SLOTS.indexOf(s);const [key,eff]=correct[i];const f=net.fills[used[s]];
+    for(const delta of rng.sample([90,180,270],3)){const nw=fnorm(f,eff+delta);if(nw===eff)continue;const d=correct.map(x=>[...x]);d[i]=[key,nw];if(!valid.has(dkey(d))){const other=SLOTS.find(o=>o!==s);const shown=fdist(f)===4?delta:90;
+      return{d,expl:`מסיח סיבוב: ${net.label(used[s])} מוצגת מסובבת ב-${shown}° ביחס למקומה האמיתי. בדקו את המילוי ביחס לצלע המשותפת עם ${net.label(used[other])} – ביחס לצלע המשותפת שום דבר לא משתנה בקיפול.`};}}}return null;},
+  foreign(rng,net,correct,used,valid){const present=new Set(net.fills.map(fkey));const colorsIn=new Set(net.fills.flatMap(f=>f.b?[f.a,f.b]:[f.a]));let c=[];
+    for(const f of net.fills){if(f.a==="white")continue;for(const t in FILL_TYPES)if(t!==f.t&&t!=="two")c.push(F(t,f.a));}for(const col in COLORS)if(!colorsIn.has(col))c.push(F("solid",col));
+    rng.shuffle(c);for(const f of c){if(present.has(fkey(f)))continue;const s=rng.choice(SLOTS);const d=correct.map(x=>[...x]);d[SLOTS.indexOf(s)]=[fkey(f),fnorm(f,rng.choice([0,90,180,270]))];if(!valid.has(dkey(d)))return{d,expl:`מילוי שלא קיים בפריסה: ${fname(f)}. סריקת "זרים" – שתי שניות ופוסלים.`};}return null;},
+  repeat(rng,net,correct,used,valid){const tw={};net.fills.forEach((f,i)=>{(tw[fkey(f)]=tw[fkey(f)]||[]).push(i);});const reps=rng.shuffle(Object.values(tw).filter(v=>v.length>1&&net.fills[v[0]].a!=="white"));
+    for(const pair of reps){const f=net.fills[pair[0]];for(const s of rng.sample(SLOTS,3))for(const rot of rng.sample([0,90,180,270],4)){const d=correct.map(x=>[...x]);d[SLOTS.indexOf(s)]=[fkey(f),fnorm(f,rot)];if(!valid.has(dkey(d))&&dkey(d)!==dkey(correct))return{d,expl:`מסיח חזרה: המילוי ${fname(f)} מופיע בפריסה פעמיים (פאות ${pair[0]+1} ו-${pair[1]+1}), אבל אף אחד משני העותקים לא יכול להופיע במקום/בכיוון שמוצג כאן.`};}}return null;},
+  shuffle(rng,net,correct,used,valid){for(let k=0;k<60;k++){const faces=rng.sample([0,1,2,3,4,5],3);const d=faces.map(i=>[fkey(net.fills[i]),fnorm(net.fills[i],rng.choice([0,90,180,270]))]);if(!valid.has(dkey(d)))return{d,expl:"שילוב הפאות והכיוונים הזה לא מתקבל מאף אחד מ-24 המבטים על הקובייה."};}return null;}
+};
+const FALLBACK=["rotation","mirror","opposite","repeat","foreign","shuffle"];
+const KIND_HE={correct:"נכונה",opposite:"מסיח ניגודים",mirror:"מסיח מראה",rotation:"מסיח סיבוב",foreign:"מסיח זר",repeat:"מסיח חזרה",shuffle:"מסיח כללי"};
+const LETTERS=["א","ב","ג","ד"];
+
+function generateQuestion(rng,level){
+  const cfg=LEVELS[level];
+  for(let attempt=0;attempt<300;attempt++){
+    const name=rng.choice(cfg.nets);const {fills,rots}=makeFills(rng,cfg);const net=new Net(name,NETS[name],fills,rots).rotated(rng.choice(cfg.netRot));
+    const [top,left]=chooseView(rng,net,cfg.view);const {desc:correct,used}=viewDescriptor(net,top,left);
+    if(correct.filter(x=>x[0].split("|")[1]==="white").length>1)continue;
+    const valid=allViews(net);const options=[{d:correct,kind:"correct",expl:null}];let ok=true;
+    for(const kind of cfg.distractors){let got=null;for(const k of [kind,...FALLBACK.filter(f=>f!==kind)]){const res=OPS[k](rng,net,correct,used,valid);if(res&&options.every(o=>dkey(o.d)!==dkey(res.d))){got={...res,kind:k};break;}}if(!got){ok=false;break;}options.push(got);}
+    if(!ok)continue;
+    if(cfg.distractors.includes("opposite")&&!options.some(o=>o.kind==="opposite"))continue;
+    if(options.filter(o=>valid.has(dkey(o.d))).length!==1)continue;
+    rng.shuffle(options);const answer=options.findIndex(o=>o.kind==="correct");
+    const t=used.top,r=used.right,l=used.left;
+    options[answer].expl=`התשובה הנכונה: עליון = פאה ${t+1}, ימני = פאה ${r+1}, שמאלי = פאה ${l+1}. אף זוג מהשלוש אינו נגדי. יחסים: ${t+1}–${r+1}: ${net.adjKind(t,r)}; ${t+1}–${l+1}: ${net.adjKind(t,l)}; ${r+1}–${l+1}: ${net.adjKind(r,l)}. הסדר עם כיוון השעון סביב הפינה בפריסה (${t+1}←${r+1}←${l+1}) זהה לסדר עליון←ימני←שמאלי.`;
+    const pairs=[];const seen=new Set();for(let i=0;i<6;i++){const o=net.opposite(i);const k=Math.min(i,o)+"-"+Math.max(i,o);if(!seen.has(k)){seen.add(k);pairs.push([Math.min(i,o),Math.max(i,o)]);}}
+    return{level,net,options,answer,used,pairs};}
+  throw new Error("generation failed");}
+
+/* ===================== drawing ===================== */
+function fillSvg(fill,rot,stroke="#333"){const a=COLORS[fill.a][0],b=fill.b?COLORS[fill.b][0]:null;let inner='<rect x="0" y="0" width="1" height="1" fill="#fff"/>';
+  if(fill.t==="solid")inner+=`<rect x="0" y="0" width="1" height="1" fill="${a}"/>`;
+  else if(fill.t==="half")inner+=`<rect x="0" y="0" width="1" height="0.5" fill="${a}"/>`;
+  else if(fill.t==="diag")inner+=`<polygon points="0,0 1,0 1,1" fill="${a}"/>`;
+  else if(fill.t==="two")inner+=`<rect x="0" y="0" width="1" height="0.5" fill="${a}"/><rect x="0" y="0.5" width="1" height="0.5" fill="${b}"/>`;
+  else if(fill.t==="hatch"){const sc=STROKE[fill.a];inner+=[0.2,0.4,0.6,0.8].map(x=>`<line x1="${x}" y1="0" x2="${x}" y2="1" stroke="${sc}" stroke-width="0.07"/>`).join("");}
+  else if(fill.t==="wave"){const sc=STROKE[fill.a];inner+=[0.25,0.5,0.75].map(y=>`<path d="M0,${y} q0.125,-0.12 0.25,0 t0.25,0 t0.25,0 t0.25,0" fill="none" stroke="${sc}" stroke-width="0.06"/>`).join("");}
+  return`<g transform="rotate(${-rot} 0.5 0.5)">${inner}</g><rect x="0" y="0" width="1" height="1" fill="none" stroke="${stroke}" stroke-width="0.04"/>`;}
+
+function netSvg(net,o={}){const cell=o.cell||40,pad=8;const R=Math.max(...net.cells.map(c=>c[0]))+1,C=Math.max(...net.cells.map(c=>c[1]))+1;const W=C*cell+2*pad,H=R*cell+2*pad;
+  let s=`<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" role="img" aria-label="פריסה">`;
+  net.cells.forEach(([r,c],i)=>{const x=pad+c*cell,y=pad+r*cell;s+=`<g transform="translate(${x} ${y}) scale(${cell})">${fillSvg(net.fills[i],net.rots[i])}</g>`;});
+  if(o.highlight)net.cells.forEach(([r,c],i)=>{const col=o.highlight[i];if(col){const x=pad+c*cell,y=pad+r*cell;s+=`<rect x="${x+2.5}" y="${y+2.5}" width="${cell-5}" height="${cell-5}" fill="none" stroke="${col}" stroke-width="4" rx="3"/>`;}});
+  if(o.edges)for(const e of o.edges){s+=`<line x1="${pad+e[0]*cell}" y1="${pad+e[1]*cell}" x2="${pad+e[2]*cell}" y2="${pad+e[3]*cell}" stroke="#e53935" stroke-width="5" stroke-linecap="round"/>`;}
+  if(o.labels)net.cells.forEach(([r,c],i)=>{const x=pad+c*cell+9,y=pad+r*cell+9;s+=`<circle cx="${x}" cy="${y}" r="7.5" fill="#fff" stroke="#333" stroke-width="1"/><text x="${x}" y="${y+3.5}" font-size="10" text-anchor="middle" font-family="sans-serif" fill="#000">${i+1}</text>`;});
+  if(o.corner){const [pr,pc]=o.corner;const cx=pad+pc*cell,cy=pad+pr*cell,rad=cell*0.62;const a0=-125*Math.PI/180,a1=190*Math.PI/180;const x0=cx+rad*Math.cos(a0),y0=cy+rad*Math.sin(a0),x1=cx+rad*Math.cos(a1),y1=cy+rad*Math.sin(a1);
+    s+=`<circle cx="${cx}" cy="${cy}" r="4" fill="#e53935"/><path d="M${x0},${y0} A${rad},${rad} 0 1 1 ${x1},${y1}" fill="none" stroke="#e53935" stroke-width="4"/>`;
+    const ang=a1+Math.PI/2;const ax=x1,ay=y1;const p=(d,l)=>[ax+l*Math.cos(ang+d),ay+l*Math.sin(ang+d)];const [bx,by]=p(2.6,10),[qx,qy]=p(-2.6,10);s+=`<polygon points="${ax},${ay} ${bx},${by} ${qx},${qy}" fill="#e53935"/>`;}
+  return s+"</svg>";}
+
+const proj=([x,y,z])=>[(x-z)*0.866,-y+(x+z)*0.5];
+function cubeSvg(desc,o={}){const unit=o.unit||26;const W=3.7*unit,H=4.2*unit;let s=`<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" role="img"><g transform="translate(${W/2} ${H/2})">`;
+  SLOTS.forEach((slot,i)=>{const [key,eff]=desc[i];const [N,Rv,Uv]=SLOT_FRAME[slot];const O=proj(add(N,add(neg(Rv),neg(Uv))));const A=proj(scl(Rv,2)),B=proj(scl(Uv,2));
+    s+=`<g transform="scale(${unit}) matrix(${A[0]} ${A[1]} ${-B[0]} ${-B[1]} ${O[0]+B[0]} ${O[1]+B[1]})">${fillSvg(fromKey(key),eff,"#222")}</g>`;});
+  if(o.edge){const [p,q]=o.edge;const a=proj(p),b=proj(q);s+=`<line x1="${a[0]*unit}" y1="${a[1]*unit}" x2="${b[0]*unit}" y2="${b[1]*unit}" stroke="#e53935" stroke-width="4" stroke-linecap="round"/>`;}
+  if(o.arrow){const pts=[[0,1.05,0],[1.05,0,0],[0,0,1.05]].map(p=>proj(p).map(v=>v*unit*0.82));const [t,r,l]=pts;
+    s+=`<path d="M${t[0]},${t[1]} Q${(t[0]+r[0])/2+unit*.5},${(t[1]+r[1])/2} ${r[0]},${r[1]} Q${(r[0]+l[0])/2},${(r[1]+l[1])/2+unit*.8} ${l[0]},${l[1]}" fill="none" stroke="#e53935" stroke-width="3.5" stroke-linecap="round"/>`;
+    [t,r,l].forEach((p,i)=>{s+=`<circle cx="${p[0]}" cy="${p[1]}" r="11" fill="#e53935"/><text x="${p[0]}" y="${p[1]+4.5}" text-anchor="middle" font-size="13" font-weight="700" fill="#fff" font-family="sans-serif">${i+1}</text>`;});}
+  return s+"</g></svg>";}
+
+/* ===================== tutorial figures ===================== */
+function fixedNet(name,fillsSpec,rot=1){const fills=fillsSpec.map(x=>Array.isArray(x)?F(x[0],x[1],x[2]||null):F("solid",x));return new Net(name,NETS[name],fills,fills.map(()=>0)).rotated(rot);}
+const PAIR_COLORS=["#e53935","#1e88e5","#43a047"];
+(function buildFigures(){
+  // hero: net + cube
+  const hero=new Net("cross",NETS.cross,["pink","white","yellow","blue","white","orange"].map(c=>F("solid",c)),[0,0,0,0,0,0]).rotated(1);
+  const hv=viewDescriptor(hero,hero.nb(hero.root).N,hero.root);
+  document.getElementById("fig-hero").innerHTML=`<div class="figrow">${netSvg(hero,{cell:36})}<span style="font-size:34px;color:var(--ink-2)">←</span>${cubeSvg(hv.desc,{unit:30})}</div>`;
+  // views
+  const av=[...allViews(hero).keys()].map(k=>JSON.parse(k));const picks=[hv.desc,av[5],av[17]].filter(Boolean);
+  document.getElementById("fig-views").insertAdjacentHTML("afterbegin",`<div class="figrow">${netSvg(hero,{cell:30})}<span style="font-size:28px;color:var(--ink-2)">←</span>${picks.map(d=>cubeSvg(d,{unit:24})).join("")}</div>`);
+  // opposite pairs on T and cross
+  const mk=(name)=>{const n=new Net(name,NETS[name]).rotated(1);const hl={};let k=0;const seen=new Set();for(let i=0;i<6;i++){const o=n.opposite(i);const key=Math.min(i,o)+"-"+Math.max(i,o);if(!seen.has(key)){seen.add(key);hl[i]=PAIR_COLORS[k];hl[o]=PAIR_COLORS[k];k++;}}return netSvg(n,{cell:36,labels:true,highlight:hl});};
+  document.getElementById("fig-opp").insertAdjacentHTML("afterbegin",`<div class="figrow"><div class="figitem">${mk("t")}<span>T</span></div><div class="figitem">${mk("cross")}<span>צלב</span></div></div>`);
+  // corner rule
+  const cn=fixedNet("cross",["blue","pink","yellow","white","white","white"],1);
+  const cv=viewDescriptor(cn,cn.nb(cn.root).N,cn.root);const mirror=[cv.desc[0],cv.desc[2],cv.desc[1]];
+  const hl={};hl[cv.used.top]="#e53935";hl[cv.used.right]="#e53935";hl[cv.used.left]="#e53935";
+  const [pr,pc]=cn.cells[cn.root];
+  document.getElementById("fig-corner").insertAdjacentHTML("afterbegin",`<div class="figrow">${netSvg(cn,{cell:40,labels:true,highlight:hl,corner:[pr,pc+1]})}<div class="figitem good">${cubeSvg(cv.desc,{unit:28,arrow:true})}<span>✓ 1←4←3 עם כיוון השעון</span></div><div class="figitem bad">${cubeSvg(mirror,{unit:28,arrow:true})}<span>✗ תמונת מראה: 1←3←4</span></div></div>`);
+  // orientation
+  const on=new Net("cross",NETS.cross,[F("solid","blue"),F("diag","pink"),F("solid","yellow"),F("solid","white"),F("solid","white"),F("solid","white")],[0,270,0,0,0,0]).rotated(1);
+  const ov=viewDescriptor(on,on.nb(on.root).N,on.root);const rotd=ov.desc.map(x=>[...x]);rotd[0]=[rotd[0][0],fnorm(fromKey(rotd[0][0]),rotd[0][1]+180)];
+  const [tr,tc]=on.cells[ov.used.top];const [lr,lc]=on.cells[ov.used.left];
+  const edgeNet=[tc,tr+1,tc+1,tr+1]; // shared edge between top cell and root (root is below top)
+  const edgeCube=[[-1,1,1],[1,1,1]];
+  document.getElementById("fig-orient").insertAdjacentHTML("afterbegin",`<div class="figrow">${netSvg(on,{cell:40,labels:true,edges:[edgeNet]})}<div class="figitem good">${cubeSvg(ov.desc,{unit:28,edge:edgeCube})}<span>✓ הוורוד נוגע בצלע</span></div><div class="figitem bad">${cubeSvg(rotd,{unit:28,edge:edgeCube})}<span>✗ מסובב — לא נוגע</span></div></div>`);
+})();
+
+/* ===================== question cards ===================== */
+function solutionSteps(q){const order={foreign:0,opposite:1,repeat:2,mirror:3,rotation:4,shuffle:5};
+  const steps=q.options.map((o,i)=>({i,kind:o.kind,expl:o.expl})).filter(s=>s.kind!=="correct").sort((a,b)=>order[a.kind]-order[b.kind]);
+  steps.push({i:q.answer,kind:"correct",expl:q.options[q.answer].expl});return steps;}
+
+function renderQuestion(q,idx,host,opts={}){
+  const card=document.createElement("article");card.className="q";
+  const optHtml=q.options.map((o,i)=>`<button type="button" class="opt" data-i="${i}" aria-label="תשובה ${LETTERS[i]}">${cubeSvg(o.d,{unit:24})}<span class="l">${LETTERS[i]}</span></button>`).join("");
+  card.innerHTML=`<div class="head"><span class="badge">שאלה ${idx}</span><span class="badge">רמה ${q.level}</span><span class="badge">פריסה: ${NET_HE[q.net.name]}</span></div>
+    <p style="font-weight:600">איזו קובייה מתקבלת מקיפול הפריסה?</p>
+    <div class="qbody"><div class="net">${netSvg(q.net,{cell:38})}</div><div class="opts">${optHtml}</div></div>
+    <div class="feedback"></div>
+    <div class="solution" hidden>
+      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px"><h3>פתרון מודרך</h3><button type="button" class="btn ghost next">השלב הבא ←</button></div>
+      <div class="sol-net">${netSvg(q.net,{cell:30,labels:true})}<div><b>זוגות נגדיים:</b> ${q.pairs.map(p=>`${p[0]+1}–${p[1]+1}`).join(", ")}<br><b>התשובה הנכונה:</b> ${LETTERS[q.answer]}</div></div>
+      <div class="sol-steps"></div>
+    </div>
+    <div style="margin-top:10px"><button type="button" class="linkbtn show-sol">הצג פתרון</button></div>`;
+  host.appendChild(card);
+  const optEls=[...card.querySelectorAll(".opt")],fb=card.querySelector(".feedback"),sol=card.querySelector(".solution"),stepsHost=card.querySelector(".sol-steps");
+  const steps=solutionSteps(q);let stepIdx=-1;
+  steps.forEach((s,k)=>{const el=document.createElement("div");el.className="sol-step"+(s.kind==="correct"?" correct-step":"");el.innerHTML=`<span class="k">${LETTERS[s.i]}</span><span><span class="kind">${s.kind==="correct"?"✓ נכונה":"✕ "+KIND_HE[s.kind]}</span>${s.expl}</span>`;el.addEventListener("click",()=>showStep(k));stepsHost.appendChild(el);});
+  function showStep(k){stepIdx=k;[...stepsHost.children].forEach((el,j)=>el.classList.toggle("active",j===k));
+    optEls.forEach((el,i)=>{el.classList.remove("hl");const done=steps.slice(0,k+1).some(s=>s.i===i&&s.kind!=="correct");el.classList.toggle("out",done);if(steps[k].i===i)el.classList.add(steps[k].kind==="correct"?"good":"hl");});}
+  function openSol(){sol.hidden=false;card.querySelector(".show-sol").hidden=true;if(stepIdx<0)showStep(0);}
+  card.querySelector(".show-sol").addEventListener("click",openSol);
+  card.querySelector(".next").addEventListener("click",()=>showStep(Math.min(stepIdx+1,steps.length-1)));
+  let answered=false;
+  optEls.forEach(el=>el.addEventListener("click",()=>{if(answered||!sol.hidden)return;answered=true;const i=+el.dataset.i;const ok=i===q.answer;el.classList.add(ok?"good":"bad");if(!ok)optEls[q.answer].classList.add("good");
+    fb.className="feedback "+(ok?"ok":"bad");fb.textContent=ok?"נכון! זו הקובייה שמתקבלת.":`לא נכון — זו ${KIND_HE[q.options[i].kind]}. התשובה הנכונה: ${LETTERS[q.answer]}. פתחו את הפתרון המודרך.`;
+    if(opts.onAnswer)opts.onAnswer(ok);}));
+  if(opts.openSolution)openSol();
+  return card;}
+
+/* example */
+(function(){const rng=RNG(20260922);let q;do{q=generateQuestion(rng,2);}while(!q.options.some(o=>o.kind==="mirror"));renderQuestion(q,"לדוגמה",document.getElementById("example-host"),{openSolution:true});})();
+
+/* generator */
+let level=1,lastBatch=[];
+document.getElementById("level-seg").addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;level=+b.dataset.level;[...e.currentTarget.children].forEach(x=>x.setAttribute("aria-pressed",x===b?"true":"false"));});
+function generate(){const n=+document.getElementById("count").value;const host=document.getElementById("questions");host.innerHTML="";const rng=RNG(Date.now()%4294967295);
+  let right=0,done=0;const score=document.getElementById("score");const upd=()=>score.textContent=done?`${right}/${done} נכונות`:"";upd();lastBatch=[];
+  for(let i=1;i<=n;i++){const lv=level||(1+Math.floor((i-1)*4/n));const q=generateQuestion(rng,lv);lastBatch.push(q);renderQuestion(q,i,host,{onAnswer:ok=>{done++;if(ok)right++;upd();}});}
+  host.scrollIntoView({behavior:"smooth",block:"start"});}
+document.getElementById("gen").addEventListener("click",generate);
+document.getElementById("copy-json").addEventListener("click",async e=>{const data=lastBatch.map((q,i)=>({id:i+1,level:q.level,net:{name:q.net.name,cells:q.net.cells,faces:q.net.fills.map((f,j)=>({label:j+1,type:f.t,color:f.a,color2:f.b,rot:q.net.rots[j]}))},opposite_pairs:q.pairs.map(p=>[p[0]+1,p[1]+1]),view:{top:q.used.top+1,right:q.used.right+1,left:q.used.left+1},
+    options:q.options.map((o,k)=>({letter:LETTERS[k],faces:Object.fromEntries(SLOTS.map((s,m)=>{const f=fromKey(o.d[m][0]);return[s,{type:f.t,color:f.a,color2:f.b,rot:o.d[m][1]}];})),kind:o.kind,explanation:o.expl})),answer:LETTERS[q.answer],answer_index:q.answer}));
+  const txt=JSON.stringify(data,null,1);const b=e.currentTarget;try{await navigator.clipboard.writeText(txt);b.textContent="הועתק ✓";}catch{const ta=document.createElement("textarea");ta.value=txt;document.body.appendChild(ta);ta.select();b.textContent="סמנו והעתיקו";}setTimeout(()=>b.textContent="העתק JSON",2000);});
+generate();
+</script>
+
+</body>
+</html>
