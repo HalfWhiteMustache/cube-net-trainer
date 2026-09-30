@@ -110,12 +110,33 @@ select{font:inherit;padding:6px 10px;border-radius:8px;border:1px solid var(--li
 .mistakes{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px}
 .mistake{background:var(--surface-2);border-radius:12px;padding:12px 14px;font-size:15px;border-inline-start:4px solid var(--bad)}
 .mistake b{display:block;font-family:Heebo}
+/* fold animation */
+.fold-wrap{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:22px;align-items:center}
+@media (max-width:720px){.fold-wrap{grid-template-columns:1fr}}
+.fold-stage{perspective:1000px;height:300px;display:grid;place-items:center;background:var(--surface-2);border-radius:12px;overflow:hidden;position:relative;touch-action:pan-y}
+.fold-scene{position:relative;width:var(--S);height:var(--S);transform-style:preserve-3d;--S:84px}
+.face{position:absolute;width:var(--S);height:var(--S);transform-style:preserve-3d}
+.face .side{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden}
+.face .side svg{width:100%;height:100%;display:block}
+.face .side.back{transform:rotateY(180deg);background:#b9c1cc;border:1px solid #8a94a3;box-sizing:border-box}
+.face.center{left:0;top:0}
+.face.n{left:0;top:calc(-1*var(--S));transform-origin:50% 100%}
+.face.s{left:0;top:var(--S);transform-origin:50% 0%}
+.face.e{left:var(--S);top:0;transform-origin:0% 50%}
+.face.w{left:calc(-1*var(--S));top:0;transform-origin:100% 50%}
+.face.b{left:0;top:var(--S);transform-origin:50% 0%}
+.fold-tag{position:absolute;top:10px;inset-inline-start:12px;background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:3px 12px;font-weight:700;font-size:14px;font-variant-numeric:tabular-nums}
+.fold-hint{position:absolute;bottom:8px;inset-inline-end:12px;font-size:12px;color:var(--ink-2)}
+.fold-ui{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:12px}
+.fold-ui input[type=range]{flex:1 1 140px;accent-color:var(--accent);min-width:120px}
+.fold-ui .lbl{font-size:14px;color:var(--ink-2);font-weight:600}
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
 
 <div class="wrap">
 <nav class="top">
   <span class="brand">מאמן קובייה פרוסה · פזצט"א</span>
+  <a href="#fold">הקיפול</a>
   <a href="#learn">איך פותרים</a>
   <a href="#example">דוגמה מודרכת</a>
   <a href="#practice">תרגול</a>
@@ -130,6 +151,34 @@ select{font:inherit;padding:6px 10px;border-radius:8px;border:1px solid var(--li
   </div>
   <figure id="fig-hero"></figure>
 </header>
+
+<section id="fold">
+  <div class="eyebrow">קודם כול</div>
+  <h2>איך פריסה הופכת לקובייה</h2>
+  <div class="card">
+    <div class="fold-wrap">
+      <div>
+        <div class="fold-stage" id="fold-stage">
+          <div class="fold-scene" id="fold-scene"></div>
+          <div class="fold-tag" id="fold-tag">פאות גלויות: 6</div>
+          <div class="fold-hint">אפשר לגרור כדי לסובב</div>
+        </div>
+        <div class="fold-ui">
+          <button class="btn" type="button" id="fold-play">▶ קפל</button>
+          <span class="lbl">קיפול</span>
+          <input type="range" id="fold-range" min="0" max="100" value="0" aria-label="שלב הקיפול">
+          <button class="btn ghost" type="button" id="fold-spin">סובב</button>
+        </div>
+      </div>
+      <div>
+        <p>הפאה האמצעית נשארת במקום, וכל שאר הפאות <b>נסגרות אחורה</b> סביב הצלע שמחברת אותן. הפאה הרחוקה ביותר בעמודה (הכתומה) סוגרת את הקובייה מאחור — ולכן היא נגדית לפאה האמצעית.</p>
+        <p>ברגע שהקובייה סגורה, לא משנה איך מסובבים אותה: מכל כיוון רואים <b>לכל היותר שלוש פאות</b>, ואלה תמיד שלוש שנפגשות בפינה אחת. שלוש הפאות שמאחור מוסתרות לגמרי.</p>
+        <p class="muted">גררו את הסליידר לאט ושימו לב: פאות שהיו זו מול זו בפריסה (עם פאה אחת ביניהן) נסגרות לצדדים מנוגדים של הקובייה — הן לעולם לא נוגעות.</p>
+        <div class="figrow" id="fold-net" style="justify-content:flex-start"></div>
+      </div>
+    </div>
+  </div>
+</section>
 
 <section id="learn">
   <div class="eyebrow">שלב 1</div>
@@ -434,6 +483,43 @@ const PAIR_COLORS=["#e53935","#1e88e5","#43a047"];
   const edgeNet=[tc,tr+1,tc+1,tr+1]; // shared edge between top cell and root (root is below top)
   const edgeCube=[[-1,1,1],[1,1,1]];
   document.getElementById("fig-orient").insertAdjacentHTML("afterbegin",`<div class="figrow">${netSvg(on,{cell:40,labels:true,edges:[edgeNet]})}<div class="figitem good">${cubeSvg(ov.desc,{unit:28,edge:edgeCube})}<span>✓ הוורוד נוגע בצלע</span></div><div class="figitem bad">${cubeSvg(rotd,{unit:28,edge:edgeCube})}<span>✗ מסובב — לא נוגע</span></div></div>`);
+})();
+
+/* ===================== fold animation ===================== */
+(function foldWidget(){
+  const FOLD_FILLS={n:F("solid","pink"),w:F("solid","white"),center:F("solid","yellow"),e:F("solid","blue"),s:F("solid","white"),b:F("solid","orange")};
+  const scene=document.getElementById("fold-scene"),tag=document.getElementById("fold-tag"),range=document.getElementById("fold-range"),
+        play=document.getElementById("fold-play"),spinBtn=document.getElementById("fold-spin"),stage=document.getElementById("fold-stage");
+  const mk=(cls,fill)=>{const d=document.createElement("div");d.className="face "+cls;
+    d.innerHTML=`<div class="side front"><svg viewBox="0 0 1 1" xmlns="http://www.w3.org/2000/svg">${fillSvg(fill,0,"#222")}</svg></div><div class="side back"></div>`;return d;};
+  const center=mk("center",FOLD_FILLS.center),n=mk("n",FOLD_FILLS.n),e=mk("e",FOLD_FILLS.e),w=mk("w",FOLD_FILLS.w),sF=mk("s",FOLD_FILLS.s),b=mk("b",FOLD_FILLS.b);
+  sF.appendChild(b);[center,n,e,w,sF].forEach(f=>scene.appendChild(f));
+  // flat net beside the animation (same colours) + the 3-face view it produces
+  const flat=new Net("cross",[[0,1],[1,0],[1,1],[1,2],[2,1],[3,1]],[FOLD_FILLS.n,FOLD_FILLS.w,FOLD_FILLS.center,FOLD_FILLS.e,FOLD_FILLS.s,FOLD_FILLS.b],[0,0,0,0,0,0]);
+  const fv=viewDescriptor(flat,0,2);
+  document.getElementById("fold-net").innerHTML=`${netSvg(flat,{cell:26})}<span style="font-size:24px;color:var(--ink-2)">←</span>${cubeSvg(fv.desc,{unit:22})}`;
+
+  let p=0,rx=-24,ry=-34,spinning=false,anim=null,drag=null;
+  const rad=d=>d*Math.PI/180;
+  function normals(th){const t=rad(th);return[[0,0,1],[0,-Math.sin(t),Math.cos(t)],[Math.sin(t),0,Math.cos(t)],[-Math.sin(t),0,Math.cos(t)],[0,Math.sin(t),Math.cos(t)],[0,Math.sin(2*t),Math.cos(2*t)]];}
+  function visible(th){const a=rad(rx),bb=rad(ry);let c=0;for(const [x,y,z] of normals(th)){const x1=x*Math.cos(bb)+z*Math.sin(bb),z1=-x*Math.sin(bb)+z*Math.cos(bb);const z2=y*Math.sin(a)+z1*Math.cos(a);if(z2>0.02)c++;}return c;}
+  function render(){const th=p*90;scene.style.transform=`rotateX(${rx}deg) rotateY(${ry}deg)`;
+    n.style.transform=`rotateX(${th}deg)`;sF.style.transform=`rotateX(${-th}deg)`;b.style.transform=`rotateX(${-th}deg)`;e.style.transform=`rotateY(${th}deg)`;w.style.transform=`rotateY(${-th}deg)`;
+    range.value=Math.round(p*100);tag.textContent=`פאות גלויות: ${visible(th)}`+(p>=0.999?" — קובייה סגורה":"");}
+  function stopAnim(){if(anim)cancelAnimationFrame(anim);anim=null;}
+  function foldTo(target,ms){stopAnim();const from=p,t0=performance.now();const step=now=>{const k=Math.min(1,(now-t0)/ms);p=from+(target-from)*(1-Math.pow(1-k,3));render();if(k<1)anim=requestAnimationFrame(step);else anim=null;};anim=requestAnimationFrame(step);}
+  let spinAnim=null;
+  function setSpin(on){spinning=on;spinBtn.textContent=on?"עצור סיבוב":"סובב";if(spinAnim)cancelAnimationFrame(spinAnim);spinAnim=null;
+    if(on){let last=performance.now();const tick=now=>{ry-=(now-last)*0.03;last=now;render();spinAnim=requestAnimationFrame(tick);};spinAnim=requestAnimationFrame(tick);}}
+  play.addEventListener("click",()=>{setSpin(false);if(p>0.98){p=0;render();}foldTo(1,2600);play.textContent="▶ קפל מחדש";});
+  range.addEventListener("input",()=>{stopAnim();p=range.value/100;render();});
+  spinBtn.addEventListener("click",()=>setSpin(!spinning));
+  stage.addEventListener("pointerdown",ev=>{if(ev.target.closest("input,button"))return;drag={x:ev.clientX,y:ev.clientY,rx,ry};stage.setPointerCapture(ev.pointerId);setSpin(false);});
+  stage.addEventListener("pointermove",ev=>{if(!drag)return;ry=drag.ry+(ev.clientX-drag.x)*0.5;rx=Math.max(-80,Math.min(80,drag.rx-(ev.clientY-drag.y)*0.5));render();});
+  stage.addEventListener("pointerup",()=>drag=null);stage.addEventListener("pointercancel",()=>drag=null);
+  render();
+  const reduce=window.matchMedia&&window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if(reduce){p=1;render();}else{setTimeout(()=>foldTo(1,3000),700);}
 })();
 
 /* ===================== question cards ===================== */
